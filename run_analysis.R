@@ -34,3 +34,10 @@ colnames(testSubjects) <- "subjectId"
 testDataMerged <- cbind(testSet, testLabels, testSubjects)
 
 combinedTestAndTrainingData <- rbind(trainingDataMerged, testDataMerged)
+
+combinedTestAndTrainingData <- combinedTestAndTrainingData[, !duplicated(colnames(combinedTestAndTrainingData))]
+combinedTestAndTrainingData <- mutate(combinedTestAndTrainingData, activityName = activityNames[activityId,2])
+
+allMeanStdData <- select(combinedTestAndTrainingData, matches('mean|Mean|std|Std|activityName|subjectId'))
+
+
