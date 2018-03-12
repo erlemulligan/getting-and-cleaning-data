@@ -40,4 +40,11 @@ combinedTestAndTrainingData <- mutate(combinedTestAndTrainingData, activityName 
 
 allMeanStdData <- select(combinedTestAndTrainingData, matches('mean|Mean|std|Std|activityName|subjectId'))
 
+avgSummaryData <- 
+  allMeanStdData %>%
+    group_by(subjectId, activityName) %>%
+    summarise_all(funs(mean))
 
+tidyDataFilePath <- file.path('tidy_data.txt')
+
+write.table(avgSummaryData, row.name = FALSE, file = tidyDataFilePath)
